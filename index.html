@@ -15,20 +15,24 @@
     </head>
     <body>
       <main ng-controller='InventoryController as ic'>
-        <table class='table table-bordered'>
+        <table class='table table-striped'>
           <thead>
             <tr>
               <th>Name</th>
               <th>Price</th>
               <th>Quantity</th>
-              <th>Color</th>
+              <th>{{ ic.color }}</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat='merch in ic.all'>
               <td>{{ merch.name }}</td>
-              <td>
-                {{ (merch.price - merch.discount) + (merch.price * ic.tax) | currency }}
+              <td ng-show="ic.GBP === false">
+                {{ ic.priceConvert(merch) | currency }}
+                <img ng-show="merch.discount > 0" src="https://tiy-learn-content.s3.amazonaws.com/98350f05-sale_2.png">
+              </td>
+              <td ng-show="ic.GBP === true">
+                {{ ic.priceConvert(merch) * 0.7 | currency:"£" }}
                 <img ng-show="merch.discount > 0" src="https://tiy-learn-content.s3.amazonaws.com/98350f05-sale_2.png">
               </td>
               <td>{{ merch.quantity }}</td>
@@ -36,7 +40,7 @@
             </tr>
           </tbody>
         </table>
-        <!-- <button id='convert'>Convert</button> -->
+        <button ng-click='ic.convert()'>Convert</button>
       </main>
     </body>
 </html>

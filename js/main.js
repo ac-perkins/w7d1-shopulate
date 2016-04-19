@@ -6,7 +6,6 @@
       .controller('InventoryController', InventoryController);
 
 
-
       function InventoryController() {
           this.all = [
              { "id": 2957, "name": "widget", "price": 32, "quantity": 203, "color": "red", "discount": 31 },
@@ -25,8 +24,21 @@
 
           this.tax = 0.0575;
 
+          this.priceConvert = function priceConvert(item) {
+              return (item.price - item.discount) + ( (item.price - item.discount) * this.tax );
+          };
+
+          this.GBP = false;
+          this.color = 'Color';
+
           this.convert = function convert() {
-            
+            if(this.GBP === false) {
+              this.GBP = true;
+              this.color = 'Colour';
+            } else {
+              this.GBP = false;
+              this.color = 'Color';
+            }
           };
 
       }
